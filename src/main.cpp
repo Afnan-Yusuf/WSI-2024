@@ -1,5 +1,5 @@
 #include <Arduino.h>
-//#include "CytronMotorDriver.h"
+#include "CytronMotorDriver.h"
 
 volatile unsigned long lastPulseA4 = 0;
 volatile unsigned long lastPulseA5 = 0;
@@ -16,8 +16,8 @@ const int ymax = 1974;
 const int thresh = 25;
 const unsigned long pulseTimeout = 1000; // Timeout for pulses in microseconds
 
-//CytronMD motor_right(PWM_DIR, 14, 2);
-//CytronMD motor_left(PWM_DIR, 15, 3);
+CytronMD motor_right(PWM_DIR, 14, 2);
+CytronMD motor_left(PWM_DIR, 15, 3);
 
 void handlePulseA4();
 void handlePulseA5();
@@ -67,8 +67,8 @@ void loop()
   }
   else
   {
-    motor_right.setSpeed(right);
-    motor_left.setSpeed(left);
+    motor_right.setSpeed(0);
+    motor_left.setSpeed(0);
   }
    Serial.print(lastPulseA10);
    Serial.print("\t");
