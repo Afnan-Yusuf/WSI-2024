@@ -47,8 +47,8 @@ void loop()
   int rightspeed;
   int leftspeed;
 
-  int angular = map(lastPulseA10, xmin, xmax, 255, -255);
-  int linear = map(lastPulseA11, ymin, ymax, 255, -255);
+  int linear = map(lastPulseA10, xmin, xmax, 255, -255);
+  int angular = map(lastPulseA11, ymin, ymax, 255, -255);
   if (linear > thresh)
   {
     rightspeed = linear + angular;
@@ -64,15 +64,35 @@ void loop()
 
     motor_right.setSpeed(rightspeed);
     motor_left.setSpeed(leftspeed);
+  }else if (angular > thresh)
+  {
+    rightspeed = angular;
+    leftspeed = 0 - angular;
+
+    motor_right.setSpeed(rightspeed);
+    motor_left.setSpeed(leftspeed);
+  }else if (angular < thresh)
+  {
+    rightspeed = 0 - angular;
+    leftspeed = angular;
+
+    motor_right.setSpeed(rightspeed);
+    motor_left.setSpeed(leftspeed);
   }
   else
   {
+    rightspeed = 0;
+    leftspeed = 0;
     motor_right.setSpeed(0);
     motor_left.setSpeed(0);
   }
-   Serial.print(lastPulseA10);
+  Serial.print(angular);
    Serial.print("\t");
-   Serial.println(lastPulseA11);
+   Serial.print(linear);
+   Serial.print("\t");
+   Serial.print(rightspeed);
+   Serial.print("\t");
+   Serial.println(leftspeed);
 }
 
 void handlePulseA4()
